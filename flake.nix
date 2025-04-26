@@ -1,11 +1,12 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     impermanence.url = "github:nix-community/impermanence";
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "unstable";
     };
 
     ssh-keys = {
@@ -30,9 +31,10 @@
           modules = [
             ./machines/base
             disko.nixosModules.disko
-            ({ ... }: {
+            {
+              disko.enableConfig = true;
               imports = [ ./machines/base/disko.nix ];
-            })
+            }
           ];
         };
       };
