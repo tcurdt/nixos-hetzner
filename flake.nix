@@ -1,12 +1,12 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     impermanence.url = "github:nix-community/impermanence";
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     ssh-keys = {
@@ -18,9 +18,9 @@
   outputs =
     { nixpkgs, disko, ... }@inputs:
     let
-      systems = [ "x86_64-linux" ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
     in
+    # systems = [ "x86_64-linux" ];
+    # forAllSystems = nixpkgs.lib.genAttrs systems;
     {
 
       # packages = forAllSystems (system: import nixpkgs.legacyPackages.${system});
@@ -32,7 +32,7 @@
             ./machines/base
             disko.nixosModules.disko
             {
-              disko.enableConfig = true;
+              # disko.enableConfig = true;
               imports = [ ./machines/base/disko.nix ];
             }
           ];
