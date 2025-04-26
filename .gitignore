@@ -2,4 +2,5 @@
 .configs
 .terraform.tfstate*
 .terraform/*
+.ssh*
 terraform.tfstate*

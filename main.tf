@@ -1,13 +1,23 @@
-resource "hcloud_ssh_key" "ephemeral" {
-  name       = "ephemeral"
-  public_key = file(var.public_key_file)
+resource "tls_private_key" "ssh" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
 
-resource "local_file" "nixos_installer" {
-  filename = "install-nixos.sh"
-  content = templatefile("${path.module}/install-nixos.sh", {
-    "nixos_config" : var.nixos_config
-    "disko_config" : var.disko_config
+resource "local_file" "private_key" {
+  content         = tls_private_key.ssh.private_key_pem
+  filename        = "${path.module}/.ssh_ephemeral_id_rsa"
+  file_permission = "0600"
+}
+
+resource "hcloud_ssh_key" "ephemeral" {
+  name       = "ephemeral-key"
+  public_key = tls_private_key.ssh.public_key_openssh
+}
+
+locals {
+  nixos_installer_content = templatefile("${path.module}/install-nixos.sh", {
+    nixos_config = var.nixos_config
+    disko_config = var.disko_config
   })
 }
 
@@ -22,15 +32,13 @@ resource "hcloud_server" "nixos" {
     ipv4_enabled = true
     ipv6_enabled = true
   }
-  ssh_keys = [
-    "${hcloud_ssh_key.ephemeral.id}",
-  ]
+  ssh_keys = [hcloud_ssh_key.ephemeral.id]
 
   connection {
     type        = "ssh"
     user        = "root"
     host        = self.ipv4_address
-    private_key = file(var.private_key_file)
+    private_key = tls_private_key.ssh.private_key_pem
   }
 
   provisioner "remote-exec" {
@@ -63,7 +71,7 @@ resource "hcloud_server" "nixos" {
   # }
 
   provisioner "remote-exec" {
-    script = local_file.nixos_installer.filename
+    inline = [local.nixos_installer_content]
   }
 
   # wait for NixOS to reboot

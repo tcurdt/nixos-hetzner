@@ -38,7 +38,7 @@
   #   FLAKE = "/etc/nixos/flake";
   # };
 
-  environment.persistence."/persistent" = {
+  environment.persistence."/persist" = {
     hideMounts = true;
     # files = [
     #   "/etc/machine-id"

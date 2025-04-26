@@ -20,14 +20,6 @@ variable "image" {
   default = "debian-12"
 }
 
-variable "public_key_file" {
-  type = string
-}
-
-variable "private_key_file" {
-  type = string
-}
-
 variable "nixos_config" {
   type    = string
   default = "github:tcurdt/nixos-hetzner#base"
