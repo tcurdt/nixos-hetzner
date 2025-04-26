@@ -1,0 +1,34 @@
+{
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    impermanence.url = "github:nix-community/impermanence";
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ssh-keys = {
+      url = "https://github.com/tcurdt.keys";
+      flake = false;
+    };
+  };
+
+  outputs =
+    { nixpkgs, ... }@inputs:
+    let
+      systems = [ "x86_64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+    in
+    {
+
+      # packages = forAllSystems (system: import nixpkgs.legacyPackages.${system});
+
+      nixosConfigurations = {
+        base = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          modules = [ ./machines/base ];
+        };
+      };
+    };
+}

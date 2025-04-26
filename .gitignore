@@ -1,0 +1,5 @@
+.env*
+.configs
+.terraform.tfstate*
+.terraform/*
+terraform.tfstate*
