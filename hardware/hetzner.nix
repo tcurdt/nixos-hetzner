@@ -21,10 +21,10 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-  fileSystems."/" = {
-    device = "/dev/sda1";
-    fsType = "ext4";
-  };
+  # fileSystems."/" = {
+  #   device = "/dev/sda1";
+  #   fsType = "ext4";
+  # };
 
   # services.cloud-init = {
   #   enabled = true;

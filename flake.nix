@@ -15,7 +15,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
+    { nixpkgs, disko, ... }@inputs:
     let
       systems = [ "x86_64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -27,7 +27,13 @@
       nixosConfigurations = {
         base = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
-          modules = [ ./machines/base ];
+          modules = [
+            ./machines/base
+            disko.nixosModules.disko
+            ({ ... }: {
+              imports = [ ./machines/base/disko.nix ];
+            })
+          ];
         };
       };
     };
