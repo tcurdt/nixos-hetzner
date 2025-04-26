@@ -28,7 +28,7 @@ nixos-install \
     --no-channel-copy \
     --show-trace \
     --option accept-flake-config true \
-    --flake "${nixos_config}"
+    --flake "github:tcurdt/nixos-hetzner#base"
 
 findmnt -m --real
 

@@ -12,7 +12,7 @@ variable "location" {
 variable "server_type" {
   description = "Server type"
   type        = string
-  default     = "cpx21"
+  default     = "cx22"
 }
 
 variable "image" {
