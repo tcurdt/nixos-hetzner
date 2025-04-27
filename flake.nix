@@ -24,7 +24,7 @@
           system = "x86_64-linux";
           modules = [
             ./machines/base
-            # disko.nixosModules.disko
+            disko.nixosModules.disko
           ];
         };
       };
