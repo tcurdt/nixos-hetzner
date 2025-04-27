@@ -74,18 +74,18 @@ resource "hcloud_server" "nixos" {
     inline = [local.nixos_installer_content]
   }
 
-  # wait for NixOS to reboot
+  # wait for reboot
   provisioner "local-exec" {
     command = "sleep 10"
   }
 }
 
 output "server_ipv4" {
-  description = "The public IPv4 address of the NixOS server"
+  description = "IPv4 address"
   value       = hcloud_server.nixos.ipv4_address
 }
 
 output "server_ipv6" {
-  description = "The public IPv6 address of the NixOS server"
+  description = "IPv6 address"
   value       = hcloud_server.nixos.ipv6_address
 }
