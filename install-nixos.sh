@@ -2,25 +2,23 @@
 
 set -euox pipefail
 
-DISKO="nix run github:nix-community/disko/latest \
-    --extra-experimental-features nix-command \
-    --extra-experimental-features flakes \
-    --no-write-lock-file --"
-
-# DISKO="nix run disko \
+# DISKO="nix run github:nix-community/disko/latest \
 #     --extra-experimental-features nix-command \
 #     --extra-experimental-features flakes \
 #     --no-write-lock-file --"
 
-# disko fails to mount partition if create and mount are done in a single execution.
-# It may be safer to create and mount in separate steps and running sync between them.
-$DISKO --mode create --flake "${disko_config}"
+DISKO="nix run disko \
+    --extra-experimental-features nix-command \
+    --extra-experimental-features flakes \
+    --no-write-lock-file --"
+
+$DISKO --mode destroy,format,mount --flake "${disko_config}"
+# $DISKO --mode format --flake "${disko_config}"
 
 sync
-
 fdisk -l
 
-$DISKO --mode mount --flake "${disko_config}"
+# $DISKO --mode mount --flake "${disko_config}"
 
 findmnt -m --real
 
