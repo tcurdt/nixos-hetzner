@@ -23,7 +23,10 @@ apply:
 destroy:
     tofu destroy -var-file=.env.tfvars
 
+check:
+    nix flake check --show-trace --all-systems
+
 ssh:
-    tofu refresh -var-file=.env.tfvars
-    ssh -A -o UserKnownHostsFile=/dev/null -i .ssh_ephemeral_id_rsa root@78.46.248.230
+    ssh -A -o StrictHostKeyChecking=no  -i .ssh_ephemeral_id_rsa root@78.46.248.230
+
     # $(tofu output -raw server_ipv4)

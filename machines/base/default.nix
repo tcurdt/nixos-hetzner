@@ -1,6 +1,6 @@
 {
   # pkgs,
-  # inputs,
+  inputs,
   ...
 }:
 {
@@ -13,7 +13,7 @@
 
     ../../hardware/hetzner.nix
 
-    # inputs.disko.nixosModules.disko
+    inputs.disko.nixosModules.disko
     ./disko.nix
 
     ../../modules/server.nix
