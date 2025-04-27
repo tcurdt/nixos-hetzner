@@ -3,7 +3,7 @@
     "disko": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -56,8 +56,7 @@
         "disko": "disko",
         "impermanence": "impermanence",
         "nixpkgs": "nixpkgs",
-        "ssh-keys": "ssh-keys",
-        "unstable": "unstable"
+        "ssh-keys": "ssh-keys"
       }
     },
     "ssh-keys": {
@@ -70,22 +69,6 @@
       "original": {
         "type": "file",
         "url": "https://github.com/tcurdt.keys"
-      }
-    },
-    "unstable": {
-      "locked": {
-        "lastModified": 1745526057,
-        "narHash": "sha256-ITSpPDwvLBZBnPRS2bUcHY3gZSwis/uTe255QgMtTLA=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "f771eb401a46846c1aebd20552521b233dd7e18b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
       }
     }
   },

@@ -17,24 +17,14 @@
 
   outputs =
     { nixpkgs, disko, ... }@inputs:
-    let
-    in
-    # systems = [ "x86_64-linux" ];
-    # forAllSystems = nixpkgs.lib.genAttrs systems;
     {
-
-      # packages = forAllSystems (system: import nixpkgs.legacyPackages.${system});
-
       nixosConfigurations = {
         base = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
+          system = "x86_64-linux";
           modules = [
             ./machines/base
-            disko.nixosModules.disko
-            {
-              # disko.enableConfig = true;
-              imports = [ ./machines/base/disko.nix ];
-            }
+            # disko.nixosModules.disko
           ];
         };
       };

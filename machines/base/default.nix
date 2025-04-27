@@ -1,6 +1,6 @@
 {
   # pkgs,
-  # inputs,
+  inputs,
   ...
 }:
 {
@@ -12,6 +12,9 @@
   imports = [
 
     ../../hardware/hetzner.nix
+
+    inputs.disko.nixosModules.disko
+    ./disko.nix
 
     ../../modules/server.nix
     ../../modules/users.nix
