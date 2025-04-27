@@ -48,7 +48,7 @@ resource "hcloud_server" "nixos" {
       "curl -L https://github.com/nix-community/nixos-images/releases/download/nixos-unstable/nixos-kexec-installer-x86_64-linux.tar.gz | tar -xzf- -C /root",
       "/root/kexec/run",
       # keep the session open before the machine starts booting into NixOS
-      "sleep 10"
+      "sleep 6"
     ]
   }
 
@@ -78,4 +78,14 @@ resource "hcloud_server" "nixos" {
   provisioner "local-exec" {
     command = "sleep 10"
   }
+}
+
+output "server_ipv4" {
+  description = "The public IPv4 address of the NixOS server"
+  value       = hcloud_server.nixos.ipv4_address
+}
+
+output "server_ipv6" {
+  description = "The public IPv6 address of the NixOS server"
+  value       = hcloud_server.nixos.ipv6_address
 }
