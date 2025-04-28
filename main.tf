@@ -42,13 +42,14 @@ resource "hcloud_server" "nixos" {
   }
 
   provisioner "remote-exec" {
+    on_failure = continue
     inline = [
       "apt-get update",
       "DEBIAN_FRONTEND=noninteractive apt-get -y install kexec-tools",
       "curl -L https://github.com/nix-community/nixos-images/releases/download/nixos-unstable/nixos-kexec-installer-x86_64-linux.tar.gz | tar -xzf- -C /root",
       "/root/kexec/run",
       # keep the session open before the machine starts booting into NixOS
-      "sleep 6"
+      "sleep 10"
     ]
   }
 

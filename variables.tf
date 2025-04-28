@@ -6,7 +6,7 @@ variable "hcloud_token" {
 variable "location" {
   description = "datacenter location (nbg1, fsn1, hel1)"
   type        = string
-  default     = "nbg1"
+  default     = "fsn1"
 }
 
 variable "server_type" {
