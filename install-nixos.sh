@@ -12,13 +12,12 @@ DISKO="nix run disko \
     --extra-experimental-features flakes \
     --no-write-lock-file --"
 
-$DISKO --mode destroy,format,mount --yes-wipe-all-disks --flake "${disko_config}"
-# $DISKO --mode format --flake "${disko_config}"
+$DISKO --mode destroy,format --yes-wipe-all-disks --flake "${disko_config}"
 
 sync
 fdisk -l
 
-# $DISKO --mode mount --flake "${disko_config}"
+$DISKO --mode mount --flake "${disko_config}"
 
 findmnt -m --real
 
