@@ -21,7 +21,7 @@ apply:
     tofu apply -auto-approve -var-file=.env.tfvars
 
 destroy:
-    tofu destroy -var-file=.env.tfvars
+    tofu destroy -auto-approve -var-file=.env.tfvars
 
 check:
     nix flake check --show-trace --all-systems
