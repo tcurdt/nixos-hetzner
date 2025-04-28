@@ -58,18 +58,6 @@ resource "hcloud_server" "nixos" {
     ]
   }
 
-  # provisioner "file" {
-  #   source      = var.luks_passphrase_file
-  #   destination = local.luks_pass_file
-  # }
-
-  # provisioner "file" {
-  #   content     = <<-TOKEN
-  #     CACHIX_AGENT_TOKEN=FOO
-  #   TOKEN
-  #   destination = local.cachix_agent_token_temp_file
-  # }
-
   provisioner "remote-exec" {
     inline = [local.nixos_installer_content]
   }
@@ -78,6 +66,38 @@ resource "hcloud_server" "nixos" {
   provisioner "local-exec" {
     command = "sleep 10"
   }
+
+  provisioner "file" {
+    # source = var.foo
+    content     = <<-TOKEN
+      FOO
+    TOKEN
+    destination = "/root/foo"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "whoami",
+      "cat /root/foo || true",
+      "shutdown -h now"
+    ]
+  }
+}
+
+resource "hcloud_snapshot" "nixos" {
+  depends_on  = [hcloud_server.nixos]
+  server_id   = hcloud_server.nixos.id
+  description = "NixOS server snapshot"
+  labels = {
+    name    = "base"
+    type    = var.server_type
+    version = "nixos-24.11"
+  }
+}
+
+output "snapshot_id" {
+  description = "ID of the snapshot"
+  value       = hcloud_snapshot.nixos.id
 }
 
 output "server_ipv4" {
